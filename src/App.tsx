@@ -58,6 +58,7 @@ const PieMainChart = (): JSX.Element => {
 
   const handlerClick = (name: string) => {
     const customIndex = data.findIndex((d) => d.name === name)
+    if (isActiveShape === customIndex) return setActiveShape(-1)
     setActiveShape(customIndex)
   }
 
@@ -67,8 +68,8 @@ const PieMainChart = (): JSX.Element => {
   }
 
   return (
-    <ResponsiveContainer width="100%" height="100%" minHeight="300px">
-      <PieChart width={300} height={300} >
+    <ResponsiveContainer width="100%" height="100%" minHeight="500px">
+      <PieChart width={500} height={500} >
         {data.map((d: PieDataType, i: number, all: PieDataType[]) => {
           if(i > 0){
             start += dataPercent[i - 1]
@@ -79,7 +80,7 @@ const PieMainChart = (): JSX.Element => {
               data={[d]} 
               dataKey={"value"}
               fill={d.color}
-              fillOpacity={isMouseEnter === i ? "1" : ".4"}
+              fillOpacity={isMouseEnter === -1 ? "1" : isMouseEnter === i ? "1" : ".4"}
               isAnimationActive={false}
               startAngle={i === 0 ? 0 : start} 
               endAngle={i === 0 ? dataPercent[i] : start + dataPercent[i]}
